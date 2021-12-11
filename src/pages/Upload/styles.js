@@ -32,7 +32,22 @@ export const Button = styled.button`
     filter: ${props => !props.disabled && "brightness(1.1)"};
   }
 `
-export const Image = styled.img`
+export const ImagesContainer = styled.div`
   margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
+
+  div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+`
+
+
+export const Image = styled.img`
+  margin-top: 20px;
   width: 250px;
 `;

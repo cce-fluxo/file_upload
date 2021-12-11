@@ -1,12 +1,13 @@
 import { useState } from "react";
 import ReactLoading from "react-loading";
 import { api } from "../../services/api";
-import { Container, Button, Image } from "./styles"
+import { Container, Button, Image, ImagesContainer } from "./styles"
 
 export const Upload = () => {
   const [file, setFile] = useState(null)
   const [lastFileName, setLastFileName] = useState(null)
   const [lastFileUrl, setLastFileUrl] = useState(null)
+  const [imageUrlPreview, setImageUrlPreview] = useState(null)
   const [isLoading, setIsLoading] = useState({ upload: false, fetch: false })
   const handleUpload = async () => {
     setIsLoading((prev) => ({ prev, upload: true }))
@@ -35,6 +36,13 @@ export const Upload = () => {
     }
     setIsLoading((prev) => ({ prev, fetch: false }))
   }
+  const handleInputChanges = (event) => {
+    const file = event.target.files[0]
+    const url = URL.createObjectURL(file)
+    setImageUrlPreview(url)
+    setFile(file)
+    
+  }
 
 
   return (
@@ -42,7 +50,7 @@ export const Upload = () => {
       <h1>Upload</h1>
       <input
         type="file"
-        onChange={e => setFile(e.target.files[0])}
+        onChange={handleInputChanges}
         accept="image/*"
       />
       <Button
@@ -74,11 +82,24 @@ export const Upload = () => {
             'Fetch'
         }
       </Button>
+      <ImagesContainer>
       {
-        lastFileUrl && (
-          <Image src={lastFileUrl} alt="image" />
-        )
-      }
+          imageUrlPreview && (
+            <div>
+              <h2>Preview</h2>
+              <Image src={imageUrlPreview} alt="preview" />
+            </div>
+          )
+        }
+        {
+          lastFileUrl && (
+            <div>
+              <h2>Uploaded</h2>
+              <Image src={lastFileUrl} alt="uploadad" />
+            </div>
+          )
+        }
+      </ImagesContainer>
     </Container>
   );
 }
