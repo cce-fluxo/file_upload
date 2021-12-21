@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-export const Container = styled.div`
+$primary: #dd33dd;
+
+.container{
   width: 100%;
   min-height: 100vh;
   padding: 50px;
@@ -12,8 +13,8 @@ export const Container = styled.div`
   h1{
     margin-bottom: 20px;
   }
-`;
-export const Button = styled.button`
+}
+button{
   width: 200px;
   height: 35px;
   font-size: 20px;
@@ -22,17 +23,30 @@ export const Button = styled.button`
   align-items: center;
   color: #b5b5b5;
   border-radius: 5px;
-  background-color: ${props => props.inverted ? "transparent" : "#dd33dd"};
-  border: 2px solid ${props => props.inverted ? "#dd33dd" : "transparent"};
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  cursor:pointer;
   transition: filter .2;
   margin-top: 20px;
-  opacity: ${props => props.disabled ? 0.5 : 1};
   &:hover{
-    filter: ${props => !props.disabled && "brightness(1.1)"};
+    filter: brightness(1.1);
   }
-`
-export const ImagesContainer = styled.div`
+  &:disabled{
+    filter: brightness(0.5);
+    cursor: not-allowed;
+  }
+}
+
+.normalButton{
+  background-color: $primary;
+  border: 2px solid transparent;
+}
+
+.invertedButton{
+  background-color: transparent;
+  border: 2px solid $primary;
+}
+
+
+.imagesContainer{
   margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -44,10 +58,10 @@ export const ImagesContainer = styled.div`
     align-items: center;
   }
 
-`
+}
 
 
-export const Image = styled.img`
+img{
   margin-top: 20px;
   width: 250px;
-`;
+}

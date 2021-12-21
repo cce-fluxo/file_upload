@@ -1,14 +1,16 @@
 import { useState } from "react";
 import ReactLoading from "react-loading";
 import { api } from "../../services/api";
-import { Container, Button, Image, ImagesContainer } from "./styles"
-
+import "./styles.scss"
 export const Upload = () => {
   const [file, setFile] = useState(null)
   const [lastFileName, setLastFileName] = useState(null)
   const [lastFileUrl, setLastFileUrl] = useState(null)
   const [imageUrlPreview, setImageUrlPreview] = useState(null)
   const [isLoading, setIsLoading] = useState({ upload: false, fetch: false })
+
+
+
   const handleUpload = async () => {
     setIsLoading((prev) => ({ prev, upload: true }))
     const fileType = file.type.split('/')[1]
@@ -21,7 +23,9 @@ export const Upload = () => {
     catch {
       console.log('error')
     }
+    setFile(null)
     setIsLoading((prev) => ({ prev, upload: false }))
+
 
   }
 
@@ -46,16 +50,17 @@ export const Upload = () => {
 
 
   return (
-    <Container>
+    <div className="container">
       <h1>Upload</h1>
       <input
         type="file"
         onChange={handleInputChanges}
         accept="image/*"
       />
-      <Button
+      <button
         onClick={handleUpload}
         disabled={!file}
+        className="normalButton"
       >
         {
           isLoading.upload ?
@@ -66,11 +71,11 @@ export const Upload = () => {
               height={18} /> :
             'Upload'
         }
-      </Button>
-      <Button
+      </button>
+      <button
         onClick={handleFetchLastFile}
+        className="invertedButton"
         disabled={!lastFileName}
-        inverted
       >
         {
           isLoading.fetch ?
@@ -81,13 +86,13 @@ export const Upload = () => {
               height={18} /> :
             'Fetch'
         }
-      </Button>
-      <ImagesContainer>
+      </button>
+      <div className="imagesContainer">
       {
           imageUrlPreview && (
             <div>
               <h2>Preview</h2>
-              <Image src={imageUrlPreview} alt="preview" />
+              <img src={imageUrlPreview} alt="preview" />
             </div>
           )
         }
@@ -95,11 +100,11 @@ export const Upload = () => {
           lastFileUrl && (
             <div>
               <h2>Uploaded</h2>
-              <Image src={lastFileUrl} alt="uploadad" />
+              <img src={lastFileUrl} alt="uploadad" />
             </div>
           )
         }
-      </ImagesContainer>
-    </Container>
+      </div>
+    </div>
   );
 }
